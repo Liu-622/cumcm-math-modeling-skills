@@ -1,0 +1,7 @@
+interface:
+  display_name: "CUMCM C题证据驱动流程"
+  short_description: "C题建模、契约测试、独立证伪与终稿复现门禁"
+  brand_color: "#1F4E79"
+  default_prompt: "Use $cumcm-c-national-prize-workflow to solve this CUMCM C problem with evidence gates, independent falsification, and a reproducible final paper."
+policy:
+  allow_implicit_invocation: true

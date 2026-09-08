@@ -1,0 +1,43 @@
+name: 模型与知识改进
+description: 建议改进模型选择、验证、创新、组合或论文写作规则
+title: "[Knowledge] "
+labels:
+  - knowledge
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: 现有问题
+      description: 指出具体文件、段落或决策规则，以及可能产生的错误判断。
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: 建议修改
+      description: 说明适用条件、不适用条件、替代方案和预期价值。
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: 案例、文献或实验依据
+      description: 给出可核验来源；一般专家建议应明确标注为建议。
+    validations:
+      required: true
+  - type: textarea
+    id: validation
+    attributes:
+      label: 如何验证这项改进
+      description: 说明需要的基线、消融、敏感性、稳健性或反例测试。
+    validations:
+      required: true
+  - type: checkboxes
+    id: scope
+    attributes:
+      label: 范围确认
+      options:
+        - label: 这项改进不是单纯增加模型复杂度。
+          required: true
+        - label: 我已经说明模型什么时候不应该使用。
+          required: true

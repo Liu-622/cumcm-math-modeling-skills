@@ -1,0 +1,37 @@
+name: 来源与版权复核
+description: 报告近似原文、来源错误或第三方权利问题
+title: "[Copyright Review] "
+labels:
+  - copyright-review
+body:
+  - type: input
+    id: affected
+    attributes:
+      label: 受影响文件或案例编号
+      placeholder: cases/case-000.md
+    validations:
+      required: true
+  - type: textarea
+    id: concern
+    attributes:
+      label: 风险说明
+      description: 说明疑似近似内容、错误来源或需要核验的权利边界；不要再次粘贴长段原文。
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: 对应来源页面
+      placeholder: https://dxs.moe.gov.cn/...
+  - type: dropdown
+    id: action
+    attributes:
+      label: 建议临时措施
+      options:
+        - 暂停发行并人工复核
+        - 重写为更短的结构化概括
+        - 更正来源或证据模式
+        - 移除相关内容
+        - 尚不确定
+    validations:
+      required: true

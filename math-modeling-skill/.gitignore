@@ -1,0 +1,58 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+
+# Editors and operating systems
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Local build and scratch directories
+tmp/
+temp/
+*.tmp
+*.part
+build/
+dist/
+artifacts/
+local-data/
+raw-data/
+source-papers/
+ocr-cache/
+skill_build/
+_抓取清单.json
+
+# Generated packages and source documents must not enter this repository
+*.zip
+*.7z
+*.rar
+*.tar
+*.gz
+*.pdf
+*.doc
+*.docx
+*.png
+*.jpg
+*.jpeg
+*.tif
+*.tiff
+
+# Environment and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials.*
+secrets.*

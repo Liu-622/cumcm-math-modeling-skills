@@ -1,0 +1,54 @@
+name: Bug 报告
+description: 报告检索、索引、验证、代码骨架或文档链接错误
+title: "[Bug] "
+labels:
+  - bug
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: 影响范围
+      options:
+        - 案例检索与索引
+        - 内容验证
+        - 代码骨架
+        - SKILL 工作流
+        - 文档与链接
+        - GitHub Actions
+        - 其他
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: 问题描述
+      description: 说明预期行为与实际行为。
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: 最小复现步骤
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: 环境
+      placeholder: Windows 11 / Python 3.12 / commit SHA
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: 日志或报错
+      description: 删除令牌、用户名、私人路径和敏感数据后再粘贴。
+      render: text
+  - type: checkboxes
+    id: sensitive
+    attributes:
+      label: 安全确认
+      options:
+        - label: 报告中不包含令牌、密钥、私人数据或原论文文件。
+          required: true

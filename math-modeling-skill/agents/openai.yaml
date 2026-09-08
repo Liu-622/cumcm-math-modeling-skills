@@ -1,0 +1,4 @@
+interface:
+  display_name: "数学建模竞赛专家"
+  short_description: "从历年优秀论文中检索案例并设计完整建模、算法验证与论文方案"
+  default_prompt: "使用 $math-modeling-skill 分析这道赛题，比较稳妥、高分与创新方案，并给出建模、验证、代码和论文结构。"

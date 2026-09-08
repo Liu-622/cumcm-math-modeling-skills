@@ -1,0 +1,68 @@
+name: 新案例提案
+description: 提议新增或重构一张优秀论文案例卡
+title: "[Case] "
+labels:
+  - case
+  - needs-evidence
+body:
+  - type: markdown
+    attributes:
+      value: |
+        请先确认仓库中没有重复案例。不要上传论文 PDF、截图、附件、OCR 缓存或大段原文。
+  - type: input
+    id: source-page
+    attributes:
+      label: 官方来源页面
+      description: 提供可核验的官方展示页，不要提供网盘或二次转载链接。
+      placeholder: https://dxs.moe.gov.cn/...
+    validations:
+      required: true
+  - type: input
+    id: identity
+    attributes:
+      label: 年份、题号和论文标题
+      placeholder: 2025 / Cxxx / 论文标题
+    validations:
+      required: true
+  - type: textarea
+    id: structure
+    attributes:
+      label: 问题结构与数据特点
+      description: 说明目标、数据规模、时间/空间/网络关系、决策变量和约束。
+    validations:
+      required: true
+  - type: textarea
+    id: decisions
+    attributes:
+      label: 模型选择与决策链
+      description: 不只列模型名称；说明为什么这样选、替代方案和子问依赖。
+    validations:
+      required: true
+  - type: textarea
+    id: validation
+    attributes:
+      label: 验证与迁移经验
+      description: 说明原论文实际验证、可迁移经验和不能机械复制的部分。
+    validations:
+      required: true
+  - type: dropdown
+    id: evidence-mode
+    attributes:
+      label: 证据模式
+      options:
+        - text
+        - ocr_sampled
+        - 尚待维护者确认
+    validations:
+      required: true
+  - type: checkboxes
+    id: rights
+    attributes:
+      label: 提交确认
+      options:
+        - label: 我没有上传或粘贴原论文文件、图片、附件和大段近似原文。
+          required: true
+        - label: 我已将论文明确做法与自己的建议分开。
+          required: true
+        - label: 我愿意按照案例卡模板和贡献约定提交后续 Pull Request。
+          required: true

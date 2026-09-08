@@ -1,0 +1,19 @@
+* text=auto
+/.gitattributes text eol=lf
+/.gitignore text eol=lf
+/LICENSE text eol=lf
+/.github/CODEOWNERS text eol=lf
+*.md text eol=lf
+*.py text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.json text eol=lf
+*.csv text eol=lf
+*.txt text eol=lf
+
+# Generated search and statistics artifacts remain tracked but are reviewed as generated files.
+/cases/index.json linguist-generated=true
+/cases/index.csv linguist-generated=true
+/cases/index.md linguist-generated=true
+/knowledge/corpus-analysis.json linguist-generated=true
+/knowledge/corpus-analysis.md linguist-generated=true

@@ -1,0 +1,21 @@
+figure.figsize: 7.2, 4.5
+figure.dpi: 120
+savefig.dpi: 300
+savefig.bbox: tight
+axes.spines.top: False
+axes.spines.right: False
+axes.grid: True
+axes.axisbelow: True
+grid.color: #D8DEE9
+grid.linewidth: 0.6
+grid.alpha: 0.65
+lines.linewidth: 1.8
+lines.markersize: 5
+legend.frameon: False
+font.size: 10
+axes.titlesize: 11
+axes.labelsize: 10
+xtick.labelsize: 9
+ytick.labelsize: 9
+pdf.fonttype: 42
+ps.fonttype: 42

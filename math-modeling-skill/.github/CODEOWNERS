@@ -1,0 +1,14 @@
+# Default owner. Replace or supplement with organization teams as they are created.
+* @CHINAITENGINEER
+
+# Protect repository policy and automation.
+/.github/ @CHINAITENGINEER
+/LICENSE @CHINAITENGINEER
+/CONTRIBUTOR-AGREEMENT.md @CHINAITENGINEER
+/SKILL.md @CHINAITENGINEER
+
+# Content and release-critical assets.
+/cases/ @CHINAITENGINEER
+/knowledge/ @CHINAITENGINEER
+/references/ @CHINAITENGINEER
+/scripts/ @CHINAITENGINEER

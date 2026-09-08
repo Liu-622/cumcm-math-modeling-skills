@@ -1,0 +1,58 @@
+name: Validate
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: validate-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-dev.txt
+
+      - name: Install validation dependencies
+        run: python -m pip install --disable-pip-version-check -r requirements-dev.txt
+
+      - name: Check whitespace
+        run: git diff --check
+
+      - name: Validate Skill content
+        run: python -B scripts/validate_skill_content.py
+
+      - name: Validate repository boundaries and indexes
+        run: python -B scripts/validate_repository.py
+
+      - name: Compile Python
+        run: python -m compileall -q scripts code
+
+      - name: Smoke-test case retrieval
+        run: python -B scripts/search_cases.py "small sample multi-objective constrained optimization robustness" --top 3
+
+      - name: Smoke-test code scaffolds
+        shell: bash
+        run: |
+          set -euo pipefail
+          while IFS= read -r file; do
+            python -B "$file"
+          done < <(find code -type f -name '*.py' | sort)

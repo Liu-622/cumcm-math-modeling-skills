@@ -1,0 +1,160 @@
+% !TEX program = xelatex
+% =============================================================================
+%  全国大学生数学建模竞赛（CUMCM）LaTeX 模板
+%  2026 电子版：A4、四边2.5cm、摘要页页码1居中、无承诺书/编号页/目录。
+%
+%  字体依赖（正文宋体 / 标题黑体 / 强调楷体）：
+%    - 规范字体：SimSun（宋体）、SimHei（黑体）、KaiTi（楷体）。
+%    - 2026格式PDF不统一规定字体、字号和行距；由ctex按当前系统选择可用中文字体。
+%    - 西文正文：Times New Roman；代码等宽：Menlo（缺失时回退到默认字体）。
+%  编译方式：xelatex main.tex （运行两遍以解决交叉引用）
+% =============================================================================
+\documentclass[12pt, a4paper]{ctexart}
+
+% ---------- 页面：A4，上下左右 2.5cm ----------
+\usepackage[a4paper, top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm]{geometry}
+
+% ---------- 数学 ----------
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{pdfauthor={},pdftitle={CUMCM参赛论文}}
+
+% ---------- 字体（fontspec + ctex，xelatex 编译） ----------
+% 中文宋体/黑体/楷体由 ctex 自动设置，并定义 \songti / \heiti / \kaishu 等命令。
+% 西文正文与代码等宽字体：
+\IfFontExistsTF{Times New Roman}{\setmainfont{Times New Roman}}{}
+\IfFontExistsTF{Menlo}{\setmonofont{Menlo}}{}
+
+% ---------- 正文：12.05pt，首行缩进 2em，两端对齐，行距 0.72em ----------
+% 12pt 字号近似 12.05pt；0.72em 行距 => 行高 = 1.72 * 字号，\linespread 因子 ≈ 1.43
+\linespread{1.43}
+\setlength{\parindent}{2em}
+
+% ---------- 标题编号（\ctexset 配置） ----------
+% 一级标题用中文数字“一、二、三、”，二级及以下用 1.1 / 1.1.1
+\ctexset{
+  section/number       = \chinese{section},
+  subsection/number    = \arabic{section}.\arabic{subsection},
+  subsubsection/number = \arabic{section}.\arabic{subsection}.\arabic{subsubsection},
+}
+
+% ---------- 标题格式（titlesec 配置） ----------
+\usepackage{titlesec}
+\titleformat{\section}
+  {\centering\fontsize{17.3pt}{20.8pt}\heiti\bfseries}
+  {\chinese{section}、}{1em}{}
+\titleformat{\subsection}
+  {\fontsize{14.45pt}{17.4pt}\heiti\bfseries}
+  {\arabic{section}.\arabic{subsection}}{1em}{}
+\titleformat{\subsubsection}
+  {\fontsize{12.05pt}{14.5pt}\heiti\bfseries}
+  {\arabic{section}.\arabic{subsection}.\arabic{subsubsection}}{1em}{}
+\titlespacing{\section}       {0pt}{1.25em}{0.82em}
+\titlespacing{\subsection}    {0pt}{1.15em}{0.55em}
+\titlespacing{\subsubsection} {0pt}{1.15em}{0.55em}
+
+% ---------- 表格与代码 ----------
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{listings}
+\lstset{
+  basicstyle=\ttfamily\small,
+  backgroundcolor=\color{black!3},
+  frame=single,
+  framesep=6pt,
+  rulecolor=\color{black!30},
+  framerule=0.8pt,
+  breaklines=true,
+  showstringspaces=false,
+  columns=fullflexible,
+  keepspaces=true,
+}
+
+% ---------- 页码：底部居中 ----------
+\pagestyle{plain}
+
+% ---------- 自定义命令（对应 Typst 函数） ----------
+% \papertitle{标题}：居中 17.3pt 加粗标题
+\newcommand{\papertitle}[1]{%
+  \begin{center}
+    {\fontsize{17.3pt}{22pt}\bfseries #1}
+  \end{center}
+  \vspace{1em}
+}
+% \abstractcn{摘要正文}{关键词}：居中“摘要”标题（14pt 加粗）+ 正文 + “关键字：”加粗 + 关键词 + 换页
+\newcommand{\abstractcn}[2]{%
+  \begin{center}{\fontsize{14pt}{17pt}\bfseries 摘要}\end{center}
+  #1\par
+  \vspace{1em}
+  {\heiti\bfseries 关键字：}#2\par
+  \clearpage
+}
+% \referencescn：参考文献节，标题“参考文献”（不带编号）
+\newcommand{\referencescn}{%
+  \input{references}%
+}
+% \appendixcn：附录支撑材料文件列表与全部完整源程序
+\newcommand{\appendixcn}{%
+  \section*{附录 A\quad 支撑材料文件列表与完整源程序}%
+  \input{sections/A_code}%
+}
+% 必须按真实使用情况保留且只调用以下一个命令；使用AI时详情另放支撑材料。
+\newcommand{\CumcmAINotUsed}{%
+  \section*{AI工具使用声明}%
+  本参赛队在竞赛过程中未使用任何AI工具。%
+}
+\newcommand{\CumcmAIUsed}[1]{%
+  \section*{AI工具使用声明}%
+  本参赛队在竞赛过程中使用了AI工具，主要用于#1，详细使用情况见支撑材料。%
+}
+% \threelinetable{标题}{列定义}{表头}{表格内容}：三线表，标题在表格上方居中 10.5pt 黑体加粗
+% 调用示例：\threelinetable{表 1 示例}{ccc}{A & B & C}{1 & 2 & 3 \\ 4 & 5 & 6}
+\newcommand{\threelinetable}[4]{%
+  \begin{center}
+    {\fontsize{10.5pt}{12.6pt}\heiti\bfseries #1}\par
+    \vspace{0.6em}
+    \begin{tabular}{#2}
+      \toprule
+      #3 \\
+      \midrule
+      #4 \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+}
+
+\begin{document}
+\setcounter{page}{1}
+
+% 电子版第一页：标题、摘要、关键词；页脚中部页码为1
+\papertitle{论文标题}
+
+\abstractcn{%
+  中文摘要内容：问题概述 + 每个子问题的方法和数值结果 + 结论%
+}{%
+  关键词1 \quad 关键词2 \quad 关键词3%
+}
+
+\input{sections/1_restatement}
+\input{sections/2_analysis}
+\input{sections/3_assumptions}
+\input{sections/4_symbols}
+\input{sections/5_problem1}
+\input{sections/6_problem2}
+\input{sections/7_problem3}
+\input{sections/8_sensitivity}
+\input{sections/9_evaluation}
+
+\newpage
+% PLACEHOLDER：按真实情况二选一并删除另一行。
+\CumcmAIUsed{PLACEHOLDER：语言润色、代码调试等实际用途}
+% \CumcmAINotUsed
+\newpage
+\referencescn
+\newpage
+\appendixcn
+
+\end{document}
