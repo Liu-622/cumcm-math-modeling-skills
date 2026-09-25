@@ -1,98 +1,156 @@
-# CUMCM Math Modeling Skills 4.0
+# CUMCM C 题全流程建模 Skills
 
-> 面向全国大学生数学建模竞赛（CUMCM）的可复用 AI 建模工作流与技能库。  
-> 从读题、建模、编程、可视化，到论文排版、验证和提交验收，帮助你把“想法”推进成“可复现、可检查、可提交”的完整成果。
+[![Validate skills](https://github.com/Liu-622/cumcm-math-modeling-skills/actions/workflows/validate.yml/badge.svg)](https://github.com/Liu-622/cumcm-math-modeling-skills/actions/workflows/validate.yml)
 
-## 中文介绍
+> 面向全国大学生数学建模竞赛（CUMCM）本科组 C 题的证据链驱动工作流：从题面与数据审计，到建模、代码、验证、图表、论文和隔离复现。
 
-### 这是什么？
+## 中文说明
 
-这是一个为数学建模竞赛和科研型建模任务整理的 Skills 集合，适用于 Codex 等支持技能调用的智能编程环境。它把竞赛中最容易遗漏的环节沉淀为清晰的阶段化流程：
+### 这套 Skills 解决什么问题
 
-**题面理解 → 数据审计 → 假设与变量 → 模型设计 → 算法求解 → 结果验证 → 图表制作 → 论文撰写 → 终稿验收**
+数学建模最难的往往不是“知道一个模型名字”，而是把整条链路做完整：
 
-每个阶段都有对应的入口、检查点和可复用模板，强调证据链、数值一致性、可复现性和论文质量，而不是只给出一个“看起来合理”的模型名称。
+**题面要求 → 数据与假设 → 模型规格 → 公式与代码 → 求解证据 → 独立验证 → 图表与论文 → 可复现提交**
 
-### 核心能力
+本仓库以 `cumcm-c-national-prize-workflow` 为总控 Skill，并组合 11 个专项 Skill、共享规范、确定性审计脚本与论文资源。它把每个阶段的输入、输出、证据和回退条件显式化，适合完整解题、阶段验收、终稿审查和高强度赛前训练。
 
-- **完整工作流**：`1start-mathmodel` 负责启动项目并生成计划，串联分析、代码、图示、写作和验收阶段。
-- **赛题分析与建模**：`2analysis-modeling` 和 `math-modeling-skill` 覆盖问题拆解、变量定义、目标函数、约束、预测/评价/优化/分类/聚类/网络/仿真等建模范式。
-- **可复现求解与可视化**：`3coding-visual` 负责实现模型、运行求解、检查约束、输出结果报告，并生成论文可用图表。
-- **技术路线图与流程图**：`4drawio` 将模型结构、数据处理和子问题求解过程整理为可引用的 DrawIO/PDF 图示。
-- **中英文论文成稿**：`5writing` 提供 Typst 与 LaTeX 双引擎模板，覆盖中文/英文、MCM/APMCM 等常见论文结构。
-- **终稿质量控制**：`6verity` 检查章节、图表引用、数值一致性、占位符、参考文献、代码复现和编译状态。
-- **C 题专项支持**：`cumcm-c-national-prize-workflow` 与 `cumcm-c-problem` 面向本科组 C 题，强调数据分析、机制解释、稳健验证和国一标准的论文审查。
-- **绘图与排版资源**：`mathmodel-figure-templates` 提供论文级配色和科学可视化模板；`typst-author` 辅助 Typst 文档编写与排错。
-- **资料与规范**：`_references`、`国赛资料` 和各 skill 内的模板、示例与检查规则，便于在比赛中快速查阅。
+“国一标准”表示质量目标，不代表或承诺获奖。最终结论仍必须以当届题面、官方规则、真实数据和人工复核为准。
 
-### 目录一览
+### C 题主工作流
+
+| 阶段 | 核心任务 | 主要产物 |
+| --- | --- | --- |
+| P0 | 核对题面、附件、模板与规则 | 项目状态、原始文件哈希 |
+| P1 | 题意拆解与数据契约 | 要求清单、字段与数据来源说明 |
+| P2 | 透明基线与历史案例差异 | 基线结果、案例适用边界 |
+| P3 | 模型规格与选择依据 | 变量、目标、约束、消融方案 |
+| P4 | 数学—代码契约 | 符号表、公式映射、行为测试 |
+| P5 | 求解与证书 | 结果、约束检查、求解器证据 |
+| P6 | 冻结验证 | 留出测试、敏感性与稳健性分析 |
+| P6R | 独立红队证伪 | 问题清单、严重性与关闭记录 |
+| P7 | 图表与论文 | 图—主张—数据链、完整正文 |
+| P8 | 隔离重建与总审计 | 可复现构建、终稿评分与放行结论 |
+
+主工作流包含项目初始化、阶段门禁、证据哈希、陈旧证据检测、图件注册、独立红队记录、隔离重建和最终审计。当前自测覆盖 16 个关键场景。
+
+### Skill 组成
 
 ```text
-1start-mathmodel/                 工作流入口
-2analysis-modeling/               题面分析与模型设计
-3coding-visual/                   编程求解、验证与图表
-4drawio/                          技术路线图与流程图
-5writing/                         Typst/LaTeX 论文生成
-6verity/                          最终验收
-cumcm-c-national-prize-workflow/  C 题国一标准工作流
-cumcm-c-problem/                  C 题专项建模支持
-math-modeling-skill/              通用建模方法库
-mathmodel-figure-templates/       论文级可视化模板
+cumcm-c-national-prize-workflow/  C 题总控、阶段门禁与审计
+├─ references/                    证据契约、模型验证、论文与红队规范
+├─ scripts/                       初始化、门禁、审计、隔离构建与自测
+├─ assets/                        论文图表配色与样式
+└─ agents/openai.yaml             Skill 界面元数据
+
+1start-mathmodel/                 建模项目启动与计划
+2analysis-modeling/               题意分析、变量、模型与约束
+3coding-visual/                   编程求解、数值验证与数据图表
+4drawio/                          技术路线图和模型结构图
+5writing/                         Typst / LaTeX 论文撰写
+6verity/                          终稿一致性、编译与提交验收
+cumcm-c-problem/                  C 题专项问题求解
+math-modeling-skill/              建模方法与历史案例检索
+mathmodel-figure-templates/       论文级科学绘图模板
 typst-author/                     Typst 写作与排错
 doctor/                           环境检查与安装向导
-_references/                      格式规范与写作规范
-国赛资料/                         竞赛参考资料
+_references/                      跨 Skill 共享规范
 ```
 
-### 如何使用
+### 安装到 Codex
 
-1. 将本仓库放入你的 Codex Skills 目录，或在支持 Skills 的环境中打开本项目。
-2. 先调用 `1start-mathmodel`，提供题面和附件，生成项目计划。
-3. 按阶段调用 `2analysis-modeling`、`3coding-visual`、`4drawio`、`5writing` 和 `6verity`。
-4. 每个阶段完成后阅读生成的报告和检查结果，再进入下一阶段；不要跳过数据审计、验证和终稿验收。
+官方的 Skill 结构以每个目录内的 `SKILL.md` 为入口，并可配套 `references/`、`scripts/` 和 `assets/`。本仓库是多个相互协作的 Skill，安装时要保留这些目录之间的同级关系。参见 [OpenAI Skills 文档](https://developers.openai.com/plugins/build/skills)。
 
-如需检查本机解释器、编译器、绘图库和 PDF 工具，可使用 `doctor`。论文模板位于 `5writing/templates/`，支持 Typst 和 LaTeX 两套方案。
+1. 克隆仓库：
 
-### 设计理念
+   ```powershell
+   git clone https://github.com/Liu-622/cumcm-math-modeling-skills.git
+   cd cumcm-math-modeling-skills
+   ```
 
-本项目不承诺“自动得到唯一最优答案”，而是帮助你建立一条可信的建模证据链：数据从哪里来、假设为何成立、模型如何求解、结果是否满足约束、图表是否与正文一致、代码能否被他人复现。最终产出应由使用者结合题面、数据和比赛要求审阅确认。
+2. 将需要的 Skill 目录和 `_references` 复制到个人 Codex Skills 目录。默认位置通常是 `C:\Users\你的用户名\.codex\skills`；如果设置了 `CODEX_HOME`，则使用其中的 `skills` 子目录。
+
+3. 至少同时安装下列目录，确保 C 题总工作流依赖完整：
+
+   ```text
+   _references
+   1start-mathmodel
+   2analysis-modeling
+   3coding-visual
+   4drawio
+   5writing
+   6verity
+   cumcm-c-national-prize-workflow
+   cumcm-c-problem
+   math-modeling-skill
+   mathmodel-figure-templates
+   typst-author
+   doctor
+   ```
+
+4. 新建一个 Codex 任务，明确调用：
+
+   ```text
+   使用 $cumcm-c-national-prize-workflow，读取当前 C 题题面和附件，先完成 P0 规则核对与项目初始化；每个阶段通过门禁后再继续。
+   ```
+
+不要只复制 `SKILL.md`。脚本、参考文档、样式文件和共享规范都是工作流的一部分。
+
+### 本地验证
+
+仓库提供无第三方 Python 依赖的发布前检查：
+
+```powershell
+python scripts/validate_repository.py
+```
+
+检查内容包括：
+
+- 顶层 Skill 的 UTF-8 frontmatter、名称和描述；
+- C 题主工作流所需的同级依赖；
+- 不应提交的 `__pycache__` 与 `.pyc`；
+- C 题主工作流的 16 项自测。
+
+GitHub Actions 会在每次 push 和 pull request 时运行同一检查。
+
+### 设计原则与边界
+
+- 当前题面、附件和官方规则始终优先于历史经验。
+- 基线模型必须先建立；复杂模型只有在公平消融中确有增益时才保留。
+- 合成情景不能伪装成真实观测，测试集不能反向参与选型。
+- 脚本门禁能检查结构、路径、哈希和可执行性，但不能单独证明数学正确、原创性或获奖结果。
+- “85 分”只表示工作流内部的候选竞争力门槛，不是竞赛结果预测。
+- 项目中包含第三方模板、资料与文档时，各自权利和署名要求仍由原作者或来源决定。
+
+### 许可状态
+
+本仓库当前没有声明覆盖全部内容的统一开源许可证。除非某个文件或子目录另有许可说明，否则不要推定其可以被任意复制、修改或再分发。正式公开推广前，建议逐项确认原创代码、第三方模板、参考资料和数据的授权边界，再由仓库所有者选择合适的许可证。
+
+---
 
 ## English
 
-### What is this?
+### Overview
 
-**CUMCM Math Modeling Skills 4.0** is a reusable, evidence-oriented skill library for the China Undergraduate Mathematical Contest in Modeling (CUMCM) and research-style modeling projects.
+This repository provides an evidence-driven, end-to-end workflow for undergraduate C problems in the China Undergraduate Mathematical Contest in Modeling (CUMCM).
 
-It turns the entire modeling process into a traceable pipeline:
+The primary `cumcm-c-national-prize-workflow` skill coordinates problem intake, data contracts, baseline modeling, mathematical and code specifications, solver evidence, frozen validation, independent red-team review, paper-ready figures, writing, isolated rebuilds, and final audit. Supporting skills cover analysis, implementation, visualization, Typst/LaTeX writing, and submission checks.
 
-**Problem understanding → Data audit → Assumptions and variables → Model design → Algorithmic solution → Validation → Visualization → Paper writing → Final quality gate**
+The phrase “national first-prize standard” describes an internal quality target. It is not an award guarantee.
 
-The collection is designed for Codex and other skill-enabled AI coding environments. It focuses on reproducibility, constraint checking, numerical consistency, and submission-ready writing—not on naming a model without completing the reasoning chain.
+### Install
 
-### Highlights
+Clone the repository and copy the skill folders plus `_references` into your Codex Skills directory while preserving their sibling layout. Do not copy only `SKILL.md`; the workflows depend on their scripts, references, assets, and shared specifications.
 
-- **End-to-end orchestration** with `1start-mathmodel`.
-- **Problem decomposition and model formulation** through `2analysis-modeling` and `math-modeling-skill`.
-- **Reproducible code, solvers, validation, and paper-ready figures** in `3coding-visual`.
-- **DrawIO/PDF technical route maps and solution flowcharts** via `4drawio`.
-- **Chinese and English Typst/LaTeX paper templates** in `5writing`, including MCM/APMCM layouts.
-- **Final submission quality gates** in `6verity`, covering structure, references, figures, numbers, placeholders, compilation, and reproducibility.
-- **Dedicated undergraduate C-problem workflows** in `cumcm-c-national-prize-workflow` and `cumcm-c-problem`.
-- **Scientific visualization templates, Typst references, competition materials, and writing standards** included in the repository.
+OpenAI’s documented skill structure uses a `SKILL.md` entry point with optional `references/`, `scripts/`, and `assets/`: [Build skills](https://developers.openai.com/plugins/build/skills).
 
-### Quick start
+### Validate
 
-1. Open this repository in Codex or another environment that supports Skills.
-2. Start with `1start-mathmodel` and provide the problem statement and attachments.
-3. Follow the generated plan through analysis, implementation, diagrams, writing, and verification.
-4. Review every report and validation result before moving to the next stage.
+```powershell
+python scripts/validate_repository.py
+```
 
-Use `doctor` to inspect the local modeling environment. Paper templates are available under `5writing/templates/` in both Typst and LaTeX.
+The validator checks all top-level skill manifests, required C-workflow dependencies, generated-file hygiene, and the primary workflow’s 16 self-tests. The same command runs in GitHub Actions on every push and pull request.
 
-### Philosophy
+### License status
 
-The toolkit does not claim to produce a magically unique optimum. Its purpose is to make every important modeling decision inspectable and reproducible: data provenance, assumptions, formulation, solver behavior, constraint satisfaction, figure–text consistency, and runnable code. Always review the generated artifacts against the original problem and contest requirements.
-
-## License and attribution
-
-Please respect the licenses and attribution requirements of the bundled templates, references, and third-party materials. Add your own citation or license information when redistributing derived work.
+No single repository-wide open-source license has been declared. Do not assume permission to reuse or redistribute files unless a file or subdirectory provides its own license. Review third-party templates, references, and datasets before public redistribution.
